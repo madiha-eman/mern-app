@@ -1,20 +1,33 @@
-import axios from "axios";
-import React, { useState } from "react";
-import { ListGroup, Row, Col, Button } from "react-bootstrap";
-import FileBase64 from 'react-file-base64';
+import React, { useEffect, useState } from "react";
+import { Button, ListGroup, Row, Col } from "react-bootstrap";
+import axios from 'axios';
+import FileBase64 from 'react-file-base64'
+import { useParams } from "react-router-dom";
 
-function AddPost() {
+const SingleUpdate = () => {
     const [title, settitle] = useState('')
     const [description, setdescription] = useState('')
     const [img, setimg] = useState('')
+    const { id } = useParams();
+    const [user, setUser] = useState(null);
+   const [update, setupadate]= useState('')
 
     const handleSubmit=(e)=>{
         e.preventDefault()
         let newPost = {title, description, img};
-        axios.post('http://localhost:4000/api/posts/add',newPost)
+        axios.post('http://localhost:4000/api/posts/update/'+ id,newPost)
         .then(res => console.log(res))
         .catch(err=>console.log(err,'error'));
       }
+      useEffect(() => {
+        fetch("http://localhost:4000/api/posts/" + id)
+          .then((res) => res.json())
+          .then((res) => {
+              console.log(res)
+              setUser(res.data)
+            })
+          .catch((err) => console.log(err));
+      }, [id]);
 
     return (
         <div>
@@ -30,13 +43,13 @@ function AddPost() {
               <Row>
                 <Col className="col-headers">Title</Col>
                 <Col>
-                  <input type="text" name='title' onChange={(e)=>settitle(e.target.value)} />
+                  <input type="text" value={user?.title} name='title' onChange={(e)=>settitle(e.target.value)} />
                 </Col>
               </Row>
               <Row>
                 <Col className="col-headers">Desc</Col>
                 <Col>
-                  <input type="text" name='description' onChange={(e)=>setdescription(e.target.value)} />
+                  <input type="text"  name='description' onChange={(e)=>setdescription(e.target.value)} />
                 </Col>
               </Row>
               <Row>
@@ -50,7 +63,7 @@ function AddPost() {
               <Row className="my-2">
                 <Col className="text-center">
                   <Button type='submit' variant="info" size="md">
-                    Add
+                    UPDATE
                   </Button>
                
                 </Col>
@@ -66,4 +79,4 @@ function AddPost() {
     )
 }
 
-export default AddPost
+export default SingleUpdate

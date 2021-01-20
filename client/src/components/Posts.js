@@ -10,6 +10,18 @@ function Posts() {
     {name:'Shehla',email:'shehla@gmail.com',id:2},
   ]);
   const [msg, setmsg] = useState('')
+  const [update, setupdate] = ('');
+  const handleUpdate= (id)=>{
+    console.log(id)
+    axios.delete('http://localhost:4000/api/posts/'+id)
+    .then((res) => {
+      console.log(res.data);
+      setmsg(`${id} update`);
+    })
+    .catch((e) => console.log(e));
+
+
+  }
   const handleDelete = (id)=>{
     console.log(id)
     axios.delete('http://localhost:4000/api/posts/'+id)
@@ -63,6 +75,15 @@ function Posts() {
                     onClick={()=>handleDelete(item._id)}
                   >
                     Delete
+                  </Button>
+                  <Button 
+                    variant="info"
+                    size="sm" 
+                    as={Link}
+                    to={"/single-update/" + item._id}
+                    onClick={()=>handleUpdate(item._id)}
+                  >
+                   update
                   </Button>
                 </Col>
               </Row>

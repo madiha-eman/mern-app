@@ -1,12 +1,19 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import Fab from '@material-ui/core/Fab';
 import { ListGroup, Row, Col } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import EditIcon from '@material-ui/icons/Edit';
+import { Input } from "@material-ui/core";
 
 const SinglePost = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
-
+ const [update, setupadate]= useState('')
+ const handlChange=(id)=>{
+  // e.preventDefault(id);
+  setupadate(<input type='text' id='id' />)
+ }
   useEffect(() => {
     fetch("http://localhost:4000/api/posts/" + id)
       .then((res) => res.json())
@@ -26,17 +33,32 @@ const SinglePost = () => {
             Posts
           </ListGroup.Item>
           <ListGroup.Item variant="light">
+         
             <Row>
               <Col className="col-headers">ID</Col>
               <Col>{user?._id}</Col>
+              <EditIcon onClick={()=>handlChange(id)} />
             </Row>
             <Row>
               <Col className="col-headers">Title</Col>
               <Col>{user?.title}</Col>
+              <EditIcon />
             </Row>
             <Row>
               <Col className="col-headers">Desc</Col>
               <Col>{user?.description}</Col>
+              <EditIcon />
+            </Row>
+            <Row>
+              <Col className="col-headers">Image</Col>
+              <Col><img width={100} src={user?.img}/></Col>
+            </Row>
+            <Row>
+              <Col>
+               <Fab aria-label="edit">
+                <EditIcon />
+              </Fab>
+              </Col>
             </Row>
           </ListGroup.Item>
         </ListGroup>

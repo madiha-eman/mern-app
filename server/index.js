@@ -9,6 +9,7 @@ const postRoute =  require('./routes/api/posts.js')
 const app = express();
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.json());
 const PORT = process.env.PORT || 4000
 ///connect to db
