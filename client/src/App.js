@@ -10,7 +10,10 @@ import Home from "./components/Home";
 import AddPost from "./components/AddPost";
 import Posts from "./components/Posts";
 import SinglePost from "./components/SinglePost";
-import SingleUpdate from "./components/SingleUpdate";
+// import SingleUpdate from "./components/SingleUpdate";
+import Products from "./components/Products";
+import AddProduct from "./components/AddProduct";
+import SingleProduct from "./components/SingleProduct";
 function App() {
   return (
     <Router>
@@ -38,8 +41,18 @@ function App() {
           <Route path="/single-post/:id">
             <SinglePost />
           </Route>
-          <Route path="/single-update/:id">
+          {/* <Route path="/single-update/:id">
             <SingleUpdate/>
+          </Route> */}
+
+           <Route path="/products">
+            <Products/>
+          </Route>
+          <Route path="/add-product">
+            <AddProduct/>
+          </Route>
+          <Route path="/single-product/:id">
+            <SingleProduct />
           </Route>
           <Route path="/">
             <Home />

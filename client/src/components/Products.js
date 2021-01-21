@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ListGroup, Row, Col, Button } from "react-bootstrap";
 import axios from 'axios';
 
-function Posts() {
+function Products() {
   const [state, setstate] = useState([]);
   // const [dummy, setdd] = useState([
   //   {name:'Faiza',email:'faz@gmail.com',id:1},
@@ -24,7 +24,7 @@ function Posts() {
   // }
   const handleDelete = (id)=>{
     console.log(id)
-    axios.delete('http://localhost:4000/api/posts/'+id)
+    axios.delete('http://localhost:4000/api/products/'+id)
     .then((res) => {
       console.log(res.data);
       setmsg(`${id} is deleted successfully`);
@@ -34,7 +34,7 @@ function Posts() {
 
   }
   useEffect(() => {
-      axios.get('http://localhost:4000/api/posts/')
+      axios.get('http://localhost:4000/api/products/')
       .then((res) => {
         console.log(res.data);
         setstate(res.data.data);
@@ -50,7 +50,8 @@ function Posts() {
           <ListGroup.Item variant="primary">
             <Row className="col-headers">
               <Col>Name</Col>
-              <Col>Email</Col>
+              <Col>image</Col>
+              <Col>desc</Col>
               <Col>Actions</Col>
             </Row>
           </ListGroup.Item>
@@ -65,7 +66,7 @@ function Posts() {
                     variant="info"
                     size="sm"
                     as={Link}
-                    to={"/single-post/" + item._id}
+                    to={"/single-product/" + item._id}
                   >
                     View
                   </Button>&nbsp;
@@ -76,14 +77,14 @@ function Posts() {
                   >
                     Delete
                   </Button>
-                  <Button 
+                  {/* <Button 
                     variant="info"
                     size="sm" 
                     as={Link}
                     to={"/single-update/" + item._id}
                   >
                    update
-                  </Button>
+                  </Button> */}
                 </Col>
               </Row>
             </ListGroup.Item>
@@ -95,4 +96,4 @@ function Posts() {
   );
 }
 
-export default Posts;
+export default Products;

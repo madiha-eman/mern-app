@@ -1,25 +1,26 @@
-const express = require('express')
-const Post = require('../../models/posts')
+const express = require('express');
 const router = express.Router()
+const Products = require('../../models/products')
+
 
 router.get('/', async (req, res) => {
     // get posts from posts
-    const posts = await Post.find();
+    const products = await Products.find();
     res.json({
         success: true,
         status: 200, //ok
-        data: posts
+        data: products
     })
 
-})
-router.post('/add', async (req, res) => {
+});
+router.post('/add-product', async (req, res) => {
     console.log(".......", req.body)
     try {
-        const post = await Post.create(req.body)
+        const product = await Products.create(req.body)
         res.json({
             success: true,
             status: 201,
-            dbid: post._id
+            dbid: product._id
         })
 
     } catch (error) {
@@ -33,27 +34,24 @@ router.post('/add', async (req, res) => {
     }
 
 
-})
+});
 router.get('/:id', async (req, res) => {
-    const post = await Post.findById(req.params.id);
+    const product = await Products.findById(req.params.id);
     res.json({
         success: true,
         status: 200, //ok
-        data: post
+        data: product
     })
 
 })
-// router.put('update/:id', (req, res) => {
-//     console.log('update')
 
-// })
 router.delete('/:id', async (req, res) => {
     try {
-         const post = await Post.findByIdAndDelete(req.params.id);
+         const product = await Products.findByIdAndDelete(req.params.id);
     res.json({
         success: true,
         status: 200, //ok
-        msg: 'post is deleted successfully'
+        msg: 'product is deleted successfully'
     })
    
     } catch (error) {

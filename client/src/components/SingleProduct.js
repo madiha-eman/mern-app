@@ -6,20 +6,20 @@ import { useParams } from "react-router-dom";
 import EditIcon from '@material-ui/icons/Edit';
 import { Input } from "@material-ui/core";
 
-const SinglePost = () => {
+const SingleProduct = () => {
   const { id } = useParams();
-  const [user, setUser] = useState(null);
+  const [product, setProduct] = useState(null);
 //  const [update, setupadate]= useState('')
 //  const handlChange=(id)=>{
 //   // e.preventDefault(id);
 //   setupadate(<input type='text' id='id' />)
 //  }
   useEffect(() => {
-    fetch("http://localhost:4000/api/posts/" + id)
+    fetch("http://localhost:4000/api/products/" + id)
       .then((res) => res.json())
       .then((res) => {
           console.log(res)
-          setUser(res.data)
+          setProduct(res.data)
         })
       .catch((err) => console.log(err));
   }, [id]);
@@ -30,28 +30,28 @@ const SinglePost = () => {
       <Col lg={6} md={8} sm={10} xs={10}>
         <ListGroup>
           <ListGroup.Item variant="primary" className="col-headers">
-            Posts
+            Product
           </ListGroup.Item>
           <ListGroup.Item variant="light">
          
             <Row>
               <Col className="col-headers">ID</Col>
-              <Col>{user?._id}</Col>
+              <Col>{product?._id}</Col>
               <EditIcon />
             </Row>
             <Row>
               <Col className="col-headers">Title</Col>
-              <Col>{user?.title}</Col>
+              <Col>{product?.title}</Col>
               <EditIcon />
             </Row>
             <Row>
               <Col className="col-headers">Desc</Col>
-              <Col>{user?.description}</Col>
+              <Col>{product?.description}</Col>
               <EditIcon />
             </Row>
             <Row>
               <Col className="col-headers">Image</Col>
-              <Col><img width={100} src={user?.img}/></Col>
+              <Col><img width={100} src={product?.img}/></Col>
             </Row>
             <Row>
               <Col>
@@ -68,4 +68,4 @@ const SinglePost = () => {
   );
 };
 
-export default SinglePost;
+export default SingleProduct;
