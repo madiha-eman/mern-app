@@ -10,8 +10,8 @@ function AddProduct() {
 
     const handleSubmit=(e)=>{
         e.preventDefault()
-        let newProduct = {title, description, img};
-        axios.post('http://localhost:4000/api/products/add',newProduct)
+        let product = {title, description, img};
+        axios.post('http://localhost:4000/api/products',product)
         .then(res => console.log(res))
         .catch(err=>console.log(err,'error'));
       }

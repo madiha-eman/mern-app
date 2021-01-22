@@ -25,33 +25,41 @@ router.get("/", async (req, res) => {
   }
 });
 //=========================================== Create Single User
-
 router.post("/", async (req, res) => {
-  console.log(req)
   try{
-  //   User.findOne({email:req.body.email})
-  //   then(user =>{
-  //     if(user){
-  //       res,json({
-  //         status:400,
-  //         msg:'this email already exist'
-  //       })
-  //     }
-    
-  
-  //  else{
-      const user = await User.create(req.body);
-    res.json({
-      success: true,
-      dbid: user._id,
-      status: 201
-    });
-  } 
+    User.findOne({email: req.body.email})
+    .then(user => {
+      
+      if(user)
+      {
+        res.json({
+          success: false,
+          status: 404,
+          unique: false,
+          msg: 'user already exists' 
+        })
+      }
+      else {
+        User.create(req.body)
+        .then (user => {
+          res.json({
+            status: 201,
+            success: true,
+            dbid: user._id,
+            unique: true,
+            msg: 'user created',
+          })
+        })
+      }
+
+    })
+  } // try end
   catch (err) {
     console.log(err);
     res.status(400).json({ success: false, error: err.message });
   }
-    
+
+});
 
   // const newUser = new User(usr);
   // try {
@@ -60,7 +68,7 @@ router.post("/", async (req, res) => {
   // } catch (e) {
   //   res.status(400).json({ message: "error in saving users" });
   // }
-});
+
 
 //===================================================================Get single user
 router.get('/:id', async (req, res) => {
@@ -82,7 +90,7 @@ router.delete('/:id', async (req, res) => {
   res.json({
       success: true,
       status: 200, //ok
-      msg: 'post is deleted successfully'
+      msg: 'user is deleted successfully'
   })
  
   } catch (error) {

@@ -9,11 +9,20 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
+import ReactTimeAgo from 'react-time-ago'
+import TimeAgo from 'react-timeago'
+import fromnowStrings from 'react-timeago/lib/language-strings/fr'
+import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
 
-function Users() {
+
+function Users({ date }) {
+  const formatter = buildFormatter(fromnowStrings)
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const history = useHistory('')
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -31,6 +40,10 @@ function Users() {
       .then((res) => {
         console.log(res.data);
         setdlt(`${id} is deleted successfully`);
+        window.location='/users'
+        // history.push('/users')
+        setOpen(false)
+        
       })
       .catch((e) => console.log(e));
 
@@ -44,11 +57,23 @@ function Users() {
       })
       .catch((e) => console.log(e));
   }, []);
+  
+  var [date,setDate] = useState(new Date());
+    
+  useEffect(() => {
+      var timer = setInterval(()=>setDate(new Date()), 1000 )
+      return function cleanup() {
+          clearInterval(timer)
+      }
+  
+  });
+ 
   return (
     <Row className="mt-5">
       <Col lg={3} md={2} sm={1} xs={1}></Col>
       <Col lg={6} md={8} sm={10} xs={10}>
         <p>{dlt}</p>
+      
         <ListGroup>
           <ListGroup.Item variant="primary">
             <Row className="col-headers">
@@ -60,8 +85,11 @@ function Users() {
 
           {state.map((item, ind) => (
             <ListGroup.Item key={ind} variant="light">
+                    <p>{date.toTimeString()}</p>
+                   <p>{date.toLocaleDateString()}</p>
+                   <TimeAgo date='from now' formatter={formatter} timeStyle="round" />
               <Row>
-                <Col>{item.name}</Col>
+            <Col>{item.name}</Col>
                 <Col>{item.email}</Col>
                 <Col>
                   <Button
@@ -86,12 +114,7 @@ function Users() {
                     onClose={handleClose}
                     aria-labelledby="responsive-dialog-title"
                   >
-                    <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
-                    <DialogContent>
-                      <DialogContentText>
-                        are you sure you want to delete
-               </DialogContentText>
-                    </DialogContent>
+                    <DialogTitle id="responsive-dialog-title">{"are you sure you want to delete?"}</DialogTitle>
                     <DialogActions>
                       <Button autoFocus onClick={handleClose} color="primary">
                         Disagree

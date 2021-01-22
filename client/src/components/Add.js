@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Button, ListGroup, Row, Col } from "react-bootstrap";
 import axios from 'axios';
+// import { useHistory } from "react-router-dom";
 
 function Add() {
  const [name,setName]=useState('')
  const [email,setEmail]=useState('')
  const [pwd,setPwd]=useState('')
+//  const history = useHistory('')
+//  const [error, setError]= useState('')
 
 const handleSubmit=(e)=>{
   e.preventDefault();
@@ -14,6 +17,11 @@ const handleSubmit=(e)=>{
       axios.post('http://localhost:4000/api/users/', user)
       .then(res => console.log(res.data))
       .catch(err=>console.log(err,'error'));
+    //   if (user !== 200) {
+    //     this.setError({error});
+    // } else {
+    //     // handle successful registration
+    // }
 
     window.location = '/users';
 
@@ -24,6 +32,7 @@ const handleSubmit=(e)=>{
       <Row className="mt-5" >
         <Col lg={3} md={2} sm={1} xs={1}></Col>
         <Col lg={6} md={8} sm={10} xs={10}>
+          
           <ListGroup>
             <ListGroup.Item variant="primary" className="col-headers">
               Register New User
