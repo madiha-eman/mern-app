@@ -14,6 +14,8 @@ import SinglePost from "./components/SinglePost";
 import Products from "./components/Products";
 import AddProduct from "./components/AddProduct";
 import SingleProduct from "./components/SingleProduct";
+import Blog1 from "./components/Blog1";
+import Read from "./components/Read";
 
 
 
@@ -44,6 +46,12 @@ function App() {
           </Route>
           <Route path="/single-post/:id">
             <SinglePost />
+          </Route>
+          <Route path="/blog1">
+            <Blog1/>
+          </Route>
+          <Route path="/read">
+            <Read/>
           </Route>
           {/* <Route path="/single-update/:id">
             <SingleUpdate/>

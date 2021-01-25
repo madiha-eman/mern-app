@@ -15,9 +15,12 @@ const Header = () => {
         <Nav.Link as={Link} to="/register">
           Register
         </Nav.Link>
-        <Nav.Link as={Link} to="/posts">
-         Posts
+        <Nav.Link as={Link} to="/blog1">
+         Blog
         </Nav.Link>
+        {/* <Nav.Link as={Link} to="/posts">
+         Posts
+        </Nav.Link> */}
         <Nav.Link as={Link} to="/addpost">
          New Post
         </Nav.Link>

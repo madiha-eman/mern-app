@@ -52,16 +52,16 @@ input[type="password"] {
   width: 100%;
 }
 
-.bg-image {
+/* .bg-image {
   width: 100%;
   height: calc(100vh - 56px);
-  background-image: url(./images/bb1.jpg);
-  background-size: cover;
-}
+  /* background-image: url(./images/bb1.jpg); */
+  /* background-size: cover;
+} */ 
 
-.title-text {
+/* .title-text {
   color: #004085;
   font-size: 100px;
   /* vertical-align: middle; */
-  line-height: calc(100vh - 56px);
-}
+  /* line-height: calc(100vh - 56px); */
+/* }  */

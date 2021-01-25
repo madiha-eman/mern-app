@@ -1,13 +1,18 @@
 import React from "react";
-import bg from "../images/bb.jpg";
+import Container from '@material-ui/core/Container';
+import './home.css'
+import Blog from "./Blog";
 
 const Home = () => {
   return (
-    <div className="bg-image">
+    <Container maxWidth="lg" style={{ backgroundColor: 'whitesmoke', }}>
+    <div className="" >
       <h1 className="title-text pl-5">
-        <i> MERN</i> App :::.
+        Blog
       </h1>
     </div>
+<Blog/>
+    </Container>
   );
 };
 
