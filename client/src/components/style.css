@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+   }
+.sign-up{
+    box-sizing: border-box;
+    border: 2px solid rgb(114, 70, 158);
+    background: rgb(114, 70, 158, .6)!important;
+    margin: auto;
+    position: absolute;
+    top: 30%;
+    left: 35%;
+    width: 400px;
+    overflow: hidden;
+    /* margin-top: 90px; */
+    padding: 20px;
+    box-shadow:0 0 18px 0 rgb(114, 70, 158);
+
+    
+
+}
+.sign-up:before{
+    content: “ ”;
+    background: inherit; 
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0; 
+    bottom: 0;
+    box-shadow: inset 0 0 0 200px rgba(255,255,255,0.2);
+    filter: blur(10px);
+   }
+@media screen and (max-width: 768px){
+    .sign-up{
+        box-sizing: border-box;
+        border: 2px solid rgb(114, 70, 158);
+        margin: auto;
+        width: 230px;
+        margin-top: 90px;
+        padding: 20px;
+        box-shadow:0 0 18px 0 rgb(114, 70, 158);
+        
+    
+    }
+}
+.inp{
+    outline: 0!important;
+    border: 0!important;
+    border-bottom: 2px solid rgb(114, 70, 158)!important ;
+    color: rgb(114, 70, 158) !important;
+}
+
+.inp:focus{
+    outline: none!important;
+}
+.btn{
+    font-family: 'Pacifico', cursive;
+    border: 2px solid rgb(114, 70, 158)!important;
+    background-color: rgb(114, 70, 158)!important;
+    color: white!important;
+    letter-spacing: 0.1em;
+
+}
+.btn:hover{
+    background-color: rgb(114, 70, 158)!important;
+    opacity: .7;
+    border: 2px solid rgb(114, 70, 158)!important;
+
+}
+.fs-1{
+    text-align: center;
+    padding-bottom: 7px;
+    font-family: 'Pacifico', cursive;
+    color: rgb(114, 70, 158);
+}

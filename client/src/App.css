@@ -36,7 +36,9 @@
     transform: rotate(360deg);
   }
 } */
-
+.bg-color{
+  background-color: rgb(114, 70, 158)!important;
+}
 .col-headers {
   font-weight: bold;
   font-size: 16px;

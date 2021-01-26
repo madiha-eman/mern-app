@@ -16,6 +16,7 @@ import AddProduct from "./components/AddProduct";
 import SingleProduct from "./components/SingleProduct";
 import Blog1 from "./components/Blog1";
 import Read from "./components/Read";
+import Login from "./components/Login";
 
 
 
@@ -65,6 +66,9 @@ function App() {
           </Route>
           <Route path="/single-product/:id">
             <SingleProduct />
+          </Route>
+          <Route path="/login">
+            <Login/>
           </Route>
           <Route path="/">
             <Home />

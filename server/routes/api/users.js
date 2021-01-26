@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 //const users = require('../../Users');
 const User = require("../../models/users.js");
+var bcrypt = require('bcryptjs');
 
 //===========================================Get all users
 router.get("/", async (req, res) => {
@@ -25,41 +26,40 @@ router.get("/", async (req, res) => {
   }
 });
 //=========================================== Create Single User
-router.post("/", async (req, res) => {
-  try{
-    User.findOne({email: req.body.email})
-    .then(user => {
-      
-      if(user)
-      {
-        res.json({
-          success: false,
-          status: 404,
-          unique: false,
-          msg: 'user already exists' 
-        })
-      }
-      else {
-        User.create(req.body)
-        .then (user => {
-          res.json({
-            status: 201,
+router.post("/add", async (req, res) => {
+  //console.log("....",req)
+  let { pwd, email, name } = req.body;
+  var salt = bcrypt.genSaltSync(10);
+  var hash = bcrypt.hashSync(pwd, salt);
+  console.log("hash=====", hash)
+  let newUser = { pwd: hash, email, name }
+  try {
+    User.findOne({ email: req.body.email })
+      .then(user => {
+        if (!user) {
+          User.create(newUser)
+           .then(usr=>res.json({
             success: true,
             dbid: user._id,
-            unique: true,
-            msg: 'user created',
-          })
-        })
-      }
+            status: 201
+          }))
+        }//if
 
-    })
-  } // try end
-  catch (err) {
+      })
+      .catch(err=>res.json({
+        error:err,
+        status:404
+      }))
+
+
+
+  } catch (err) {
     console.log(err);
     res.status(400).json({ success: false, error: err.message });
   }
 
 });
+
 
   // const newUser = new User(usr);
   // try {
@@ -99,5 +99,32 @@ router.delete('/:id', async (req, res) => {
   
 
 })
+router.post('/login', async (req, res) => {
+  let {pwd,email} = req.body;
+  console.log(req.body)
+
+
+  try {
+    User.findOne({email})
+    .then(user=>{
+      console.log(user)
+      bcrypt.compare(pwd, user.pwd).then((isMatch) => {
+        if (!isMatch) return res.status(400).json({ msg: "Invalid credential" });
+        else {
+          res.json({
+            status: 200,
+            data: user,
+            msg: "login success"
+          })
+             }//else
+            }) //bcypt then
+            // .catch(err => console.log('.....', err))
+          })//usr then
+      }//try
+      catch (error) {
+        console.log(error)
+      }
+    }//post
+    )
 
 module.exports = router;
