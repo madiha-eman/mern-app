@@ -114,6 +114,7 @@ useEffect(() => {
                               </div>
                                    
                     <div class="middle">
+                      <h4>{item.title}</h4>
                             <p>{item.description}</p>
                       <button className='btn-hvr'>Read more</button>
                     </div>

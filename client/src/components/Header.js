@@ -30,6 +30,9 @@ const Header = () => {
         <Nav.Link as={Link} to="/add-product">
          New Product
         </Nav.Link>
+      <Nav.Link as={Link} to="/login">
+        Login
+      </Nav.Link>
       </Nav>
     </Navbar>
   );

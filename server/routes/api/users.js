@@ -38,7 +38,7 @@ router.post("/add", async (req, res) => {
       .then(user => {
         if (!user) {
           User.create(newUser)
-           .then(usr=>res.json({
+           .then(user=>res.json({
             success: true,
             dbid: user._id,
             status: 201
@@ -100,31 +100,57 @@ router.delete('/:id', async (req, res) => {
 
 })
 router.post('/login', async (req, res) => {
-  let {pwd,email} = req.body;
+  let { pwd, email } = req.body;
   console.log(req.body)
 
-
   try {
-    User.findOne({email})
-    .then(user=>{
-      console.log(user)
-      bcrypt.compare(pwd, user.pwd).then((isMatch) => {
-        if (!isMatch) return res.status(400).json({ msg: "Invalid credential" });
-        else {
-          res.json({
-            status: 200,
-            data: user,
-            msg: "login success"
-          })
-             }//else
-            }) //bcypt then
-            // .catch(err => console.log('.....', err))
-          })//usr then
-      }//try
-      catch (error) {
-        console.log(error)
-      }
-    }//post
-    )
+    User.findOne({ email })
+      .then(user => {
+        console.log(user)
+        bcrypt.compare(pwd, user.pwd)
+        .then((isMatch) => {
+          if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
+          else {
+            let onLineUser = {id:user._id, name:user.name, email:user.email}
+            req.session.user =onLineUser
+            console.log(req.session.user)
+            res.json({
+              status: 200,
+              data: user,
+              msg: "login success"
+            })
 
+          }//else
+        }) //bcypt then
+        // .catch(err => console.log('.....', err))
+      })//usr then
+  }//try
+  catch (error) {
+    console.log(error)
+  }
+}//post
+)
+
+///=========logout
+router.post('/logout',(req,res)=>{
+req.session.destroy()
+.then(sess=>{
+  res.clearCookie("session-id");
+  res.json({
+    status: 200,
+    msg: "logout success"
+  })
+
+})
+.catch(err=>{
+  res.json({
+    status: 400,
+    msg: "logout failed"
+  })
+
+})
+})
+router.post('/authcheck',(req,res)=>{
+  console.log('authcheck')
+})
 module.exports = router;
