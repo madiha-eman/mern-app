@@ -14,10 +14,14 @@ import ReactTimeAgo from 'react-time-ago'
 import TimeAgo from 'react-timeago'
 import fromnowStrings from 'react-timeago/lib/language-strings/fr'
 import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
+import Editable from "./tables/Editable";
 
 
-function Users({ date }) {
-  const formatter = buildFormatter(fromnowStrings)
+function Users() {
+  const [cols, setcols] = useState([
+    { title: 'Name', field: 'name' },
+    { title: 'Email', field: 'email' }
+  ])
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
@@ -50,88 +54,17 @@ function Users({ date }) {
 
   }
   useEffect(() => {
-    axios.get('http://localhost:4000/api/users/')
-      .then((res) => {
-        console.log(res);
-        setstate(res.data.data);
-      })
-      .catch((e) => console.log(e));
+    async function fetchUsers() {
+      const users = await axios.get('http://localhost:4000/api/users')
+      console.log(users.data.data);
+      setstate(users.data.data)
+
+    }
+    fetchUsers()
   }, []);
   
-  var [date,setDate] = useState(new Date());
-    
-  useEffect(() => {
-      var timer = setInterval(()=>setDate(new Date()), 1000 )
-      return function cleanup() {
-          clearInterval(timer)
-      }
-  
-  });
- 
   return (
-    <Row className="mt-5">
-      <Col lg={3} md={2} sm={1} xs={1}></Col>
-      <Col lg={6} md={8} sm={10} xs={10}>
-        <p>{dlt}</p>
-      
-        <ListGroup>
-          <ListGroup.Item variant="primary">
-            <Row className="col-headers">
-              <Col>Name</Col>
-              <Col>Email</Col>
-              <Col>Actions</Col>
-            </Row>
-          </ListGroup.Item>
-
-          {state.map((item, ind) => (
-            <ListGroup.Item key={ind} variant="light">
-                    <p>{date.toTimeString()}</p>
-                   <p>{date.toLocaleDateString()}</p>
-                   <TimeAgo date='from now' formatter={formatter} timeStyle="round" />
-              <Row>
-            <Col>{item.name}</Col>
-                <Col>{item.email}</Col>
-                <Col>
-                  <Button
-                    variant="info"
-                    size="sm"
-                    as={Link}
-                    to={"/single-user/" + item._id}
-                  >
-                    View
-                  </Button>&nbsp;
-                  <Button
-                    variant="info"
-                    size="sm"
-                    onClick={handleClickOpen}
-                    
-                  >
-                    Delete
-                  </Button>
-                  <Dialog
-                    fullScreen={fullScreen}
-                    open={open}
-                    onClose={handleClose}
-                    aria-labelledby="responsive-dialog-title"
-                  >
-                    <DialogTitle id="responsive-dialog-title">{"are you sure you want to delete?"}</DialogTitle>
-                    <DialogActions>
-                      <Button autoFocus onClick={handleClose} color="primary">
-                        Disagree
-               </Button>
-                      <Button onClick={() => handleDelete(item._id)} color="primary" autoFocus>
-                        Agree
-               </Button>
-                    </DialogActions>
-                  </Dialog>
-                </Col>
-              </Row>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
-      </Col>
-      <Col lg={3} md={2} sm={1} xs={1}></Col>
-    </Row>
+    <Editable rows={state} cols={cols}/>
   );
 }
 
